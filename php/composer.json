@@ -1,0 +1,33 @@
+{
+    "name": "cloze/cloze-sdk-php",
+    "description": "PHP SDK for the Cloze API with 100% endpoint coverage",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Cloze SDK",
+            "email": "support@cloze.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "guzzlehttp/guzzle": "^7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0",
+        "phpstan/phpstan": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Cloze\\SDK\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Cloze\\SDK\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
+
