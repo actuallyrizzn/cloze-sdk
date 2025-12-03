@@ -123,4 +123,39 @@ class TestPeople:
                 params={}
             )
             assert result == {"errorcode": 0, "list": []}
+    
+    def test_find_with_params(self, people):
+        """Test find method with parameters."""
+        with patch.object(people.client, '_make_request') as mock_request:
+            mock_request.return_value = {"errorcode": 0, "list": []}
+            
+            result = people.find(
+                query={"segment": "test"},
+                pagenumber=1,
+                pagesize=10,
+                countonly=False
+            )
+            
+            call_args = mock_request.call_args
+            assert call_args[0][0] == "GET"
+            assert call_args[0][1] == "/v1/people/find"
+            assert call_args[1]["params"]["segment"] == "test"
+            assert call_args[1]["params"]["pagenumber"] == 1
+            assert call_args[1]["params"]["pagesize"] == 10
+            assert call_args[1]["params"]["countonly"] is False
+    
+    def test_feed_with_params(self, people):
+        """Test feed method with parameters."""
+        with patch.object(people.client, '_make_request') as mock_request:
+            mock_request.return_value = {"errorcode": 0, "list": []}
+            
+            result = people.feed(cursor="test", segment="test", stage="test", scope="local")
+            
+            call_args = mock_request.call_args
+            assert call_args[0][0] == "GET"
+            assert call_args[0][1] == "/v1/people/feed"
+            assert call_args[1]["params"]["cursor"] == "test"
+            assert call_args[1]["params"]["segment"] == "test"
+            assert call_args[1]["params"]["stage"] == "test"
+            assert call_args[1]["params"]["scope"] == "local"
 
