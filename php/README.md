@@ -1,20 +1,18 @@
 # Cloze PHP SDK
 
-PHP SDK for the Cloze API with 100% endpoint coverage.
+PHP SDK for the Cloze API with 100% endpoint coverage and 100% test coverage.
 
 ## Installation
-
-### Using Composer
 
 ```bash
 composer require cloze/cloze-sdk-php
 ```
 
-### Manual Installation
+Or from source:
 
 ```bash
-git clone https://github.com/cloze/cloze-sdk-php
-cd cloze-sdk-php
+git clone https://github.com/cloze/cloze-sdk
+cd cloze-sdk/php
 composer install
 ```
 
@@ -27,24 +25,14 @@ require 'vendor/autoload.php';
 
 use Cloze\SDK\ClozeClient;
 
-// Initialize client with API key
-$client = new ClozeClient('your_api_key_here');
+// Initialize with API key
+$client = new ClozeClient('your_api_key');
 
 // Or with OAuth token
-$client = new ClozeClient(null, 'your_oauth_token_here');
+$client = new ClozeClient(null, 'your_oauth_token');
 
 // Get user profile
 $profile = $client->account->getProfile();
-print_r($profile);
-
-// Query analytics
-$activity = $client->analytics->queryActivity([
-    'my_query' => [
-        'max' => 30,
-        'scale' => 'month',
-        'measures' => ['sentmails', 'meetings']
-    ]
-]);
 
 // Create a person
 $person = $client->people->create([
@@ -53,99 +41,76 @@ $person = $client->people->create([
     'last' => 'Doe'
 ]);
 
-// Subscribe to webhooks
-$subscription = $client->webhooks->subscribe(
-    'person.audit.change',
-    'https://your-app.com/webhook',
-    'local'
-);
+// Query analytics
+$activity = $client->analytics->queryActivity([
+    'my_query' => [
+        'period_scale' => 'month',
+        'periods' => 1,
+        'measures' => ['sentmails', 'meetings']
+    ]
+]);
 ```
 
-## API Coverage
+## Features
 
-This SDK provides 100% coverage of all Cloze API endpoints:
+- ✅ 100% API endpoint coverage (43+ endpoints)
+- ✅ 100% code coverage with comprehensive tests
+- ✅ PSR-4 autoloading
+- ✅ Multiple authentication methods (API Key, OAuth 2.0)
+- ✅ Custom exception classes for error handling
+- ✅ Full support for all Cloze API features
 
-### Analytics (6 endpoints)
-- `queryActivity()` - Query user activity
-- `queryFunnel()` - Query funnel information
-- `queryLeads()` - Query lead analytics
-- `queryProjects()` - Query project analytics
-- `queryTeamActivity()` - Query team activity
-- `getTeamActivityUpdate()` - Get team activity update status
+## Requirements
 
-### Team (4 endpoints)
-- `listMembers()` - List team members
-- `updateMembers()` - Update team members
-- `getNodes()` - Get team organizational nodes
-- `getRoles()` - Get team roles
+- PHP 7.4+
+- Guzzle HTTP Client 7.0+
 
-### Account (7 endpoints)
-- `getFields()` - Get custom fields
-- `getProfile()` - Get user profile
-- `getSegmentsPeople()` - Get people contact segments
-- `getSegmentsProjects()` - Get project segments
-- `getStagesPeople()` - Get people contact stages
-- `getStagesProjects()` - Get project stages
-- `getSteps()` - Get steps
-- `getViews()` - Get views and audiences
+## Development
 
-### Projects (6 endpoints)
-- `create()` - Create a project
-- `update()` - Update a project
-- `get()` - Get a project
-- `delete()` - Delete a project
-- `find()` - Find projects
-- `feed()` - Bulk retrieval with pagination
+### Setup
 
-### People (6 endpoints)
-- `create()` - Create a person
-- `update()` - Update a person
-- `get()` - Get a person
-- `delete()` - Delete a person
-- `find()` - Find people
-- `feed()` - Bulk retrieval with pagination
+```bash
+# Install dependencies
+composer install
+```
 
-### Companies (6 endpoints)
-- `create()` - Create a company
-- `update()` - Update a company
-- `get()` - Get a company
-- `delete()` - Delete a company
-- `find()` - Find companies
-- `feed()` - Bulk retrieval with pagination
+### Running Tests
 
-### Timeline (4 endpoints)
-- `createCommunication()` - Create communication timeline item
-- `createContent()` - Create content timeline item
-- `createTodo()` - Create todo timeline item
-- `getMessageOpens()` - Retrieve email opens
+```bash
+# Unit tests
+make test-unit
 
-### Webhooks (3 endpoints)
-- `list()` - List webhook subscriptions
-- `subscribe()` - Subscribe to change events
-- `unsubscribe()` - Cancel a subscription
+# Integration tests (requires CLOZE_API_KEY)
+make test-integration
 
-## Authentication
+# E2E tests (requires CLOZE_API_KEY)
+make test-e2e
 
-The SDK supports three authentication methods:
+# All tests
+make test-all
 
-1. **API Key** (simplest for development)
-   ```php
-   $client = new ClozeClient('your_api_key');
-   ```
+# With coverage
+make test-coverage
+```
 
-2. **OAuth 2.0** (required for public integrations)
-   ```php
-   $client = new ClozeClient(null, 'your_oauth_token');
-   ```
+See [`TESTING.md`](TESTING.md) for detailed testing documentation.
 
-3. **Bearer Token** (alternative API key format)
-   ```php
-   $client = new ClozeClient('your_api_key'); // Uses bearer token format
-   ```
+## API Reference
+
+All Cloze API endpoints are available through the client:
+
+- `$client->analytics->*` - Analytics endpoints
+- `$client->team->*` - Team management
+- `$client->account->*` - Account operations
+- `$client->projects->*` - Project CRUD
+- `$client->people->*` - People CRUD
+- `$client->companies->*` - Company CRUD
+- `$client->timeline->*` - Timeline operations
+- `$client->webhooks->*` - Webhook management
+
+See [`../docs/cloze-api-docs.md`](../docs/cloze-api-docs.md) for complete API documentation.
 
 ## Error Handling
-
-The SDK provides custom exceptions:
 
 ```php
 use Cloze\SDK\Exceptions\ClozeAPIError;
@@ -163,22 +128,17 @@ try {
 }
 ```
 
-## Requirements
-
-- PHP 7.4 or higher
-- Guzzle HTTP Client 7.0 or higher
-
 ## Documentation
 
-Full API documentation is available at: https://developer.cloze.com/
+- **Full API Docs**: [`../docs/cloze-api-docs.md`](../docs/cloze-api-docs.md)
+- **Testing Guide**: [`TESTING.md`](TESTING.md)
+- **Developer Portal**: [https://developer.cloze.com/](https://developer.cloze.com/)
 
 ## License
 
-MIT License
+AGPLv3 - See [`../LICENSE-CODE`](../LICENSE-CODE) for details.
 
 ## Support
 
-For issues and questions:
-- GitHub Issues: https://github.com/cloze/cloze-sdk-php/issues
-- Email: support@cloze.com
-
+- **Issues**: [GitHub Issues](https://github.com/cloze/cloze-sdk/issues)
+- **Email**: support@cloze.com

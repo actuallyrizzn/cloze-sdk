@@ -1,38 +1,19 @@
 # Cloze Python SDK
 
-Python SDK for the Cloze API with 100% endpoint coverage.
+Python SDK for the Cloze API with 100% endpoint coverage and 100% test coverage.
 
 ## Installation
-
-### Using pip
 
 ```bash
 pip install cloze-sdk
 ```
 
-### From source
+Or from source:
 
 ```bash
-git clone https://github.com/cloze/cloze-sdk-python
-cd cloze-sdk-python
+git clone https://github.com/cloze/cloze-sdk
+cd cloze-sdk/python
 pip install -e .
-```
-
-### Development Setup
-
-```bash
-# Create virtual environment
-python -m venv venv
-
-# Activate virtual environment
-# On Windows:
-venv\Scripts\activate
-# On macOS/Linux:
-source venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
-pip install -r requirements-dev.txt
 ```
 
 ## Quick Start
@@ -40,24 +21,14 @@ pip install -r requirements-dev.txt
 ```python
 from cloze_sdk import ClozeClient
 
-# Initialize client with API key
-client = ClozeClient(api_key="your_api_key_here")
+# Initialize with API key
+client = ClozeClient(api_key="your_api_key")
 
 # Or with OAuth token
-client = ClozeClient(oauth_token="your_oauth_token_here")
+client = ClozeClient(oauth_token="your_oauth_token")
 
 # Get user profile
 profile = client.account.get_profile()
-print(profile)
-
-# Query analytics
-activity = client.analytics.query_activity({
-    "my_query": {
-        "max": 30,
-        "scale": "month",
-        "measures": ["sentmails", "meetings"]
-    }
-})
 
 # Create a person
 person = client.people.create({
@@ -66,102 +37,89 @@ person = client.people.create({
     "last": "Doe"
 })
 
-# Subscribe to webhooks
-subscription = client.webhooks.subscribe(
-    event="person.audit.change",
-    target_url="https://your-app.com/webhook",
-    scope="local"
-)
+# Query analytics
+activity = client.analytics.query_activity({
+    "my_query": {
+        "period_scale": "month",
+        "periods": 1,
+        "measures": ["sentmails", "meetings"]
+    }
+})
 ```
 
-## API Coverage
+## Features
 
-This SDK provides 100% coverage of all Cloze API endpoints:
+- ✅ 100% API endpoint coverage (43+ endpoints)
+- ✅ 100% code coverage with comprehensive tests
+- ✅ Type hints throughout
+- ✅ Multiple authentication methods (API Key, OAuth 2.0)
+- ✅ Custom exception classes for error handling
+- ✅ Full support for all Cloze API features
 
-### Analytics (6 endpoints)
-- `query_activity()` - Query user activity
-- `query_funnel()` - Query funnel information
-- `query_leads()` - Query lead analytics
-- `query_projects()` - Query project analytics
-- `query_team_activity()` - Query team activity
-- `get_team_activity_update()` - Get team activity update status
+## Requirements
 
-### Team (4 endpoints)
-- `list_members()` - List team members
-- `update_members()` - Update team members
-- `get_nodes()` - Get team organizational nodes
-- `get_roles()` - Get team roles
+- Python 3.7+
+- `requests` library
 
-### Account (7 endpoints)
-- `get_fields()` - Get custom fields
-- `get_profile()` - Get user profile
-- `get_segments_people()` - Get people contact segments
-- `get_segments_projects()` - Get project segments
-- `get_stages_people()` - Get people contact stages
-- `get_stages_projects()` - Get project stages
-- `get_steps()` - Get steps
-- `get_views()` - Get views and audiences
+## Development
 
-### Projects (6 endpoints)
-- `create()` - Create a project
-- `update()` - Update a project
-- `get()` - Get a project
-- `delete()` - Delete a project
-- `find()` - Find projects
-- `feed()` - Bulk retrieval with pagination
+### Setup
 
-### People (6 endpoints)
-- `create()` - Create a person
-- `update()` - Update a person
-- `get()` - Get a person
-- `delete()` - Delete a person
-- `find()` - Find people
-- `feed()` - Bulk retrieval with pagination
+```bash
+# Create virtual environment
+python -m venv venv
 
-### Companies (6 endpoints)
-- `create()` - Create a company
-- `update()` - Update a company
-- `get()` - Get a company
-- `delete()` - Delete a company
-- `find()` - Find companies
-- `feed()` - Bulk retrieval with pagination
+# Activate (Windows)
+venv\Scripts\activate
 
-### Timeline (4 endpoints)
-- `create_communication()` - Create communication timeline item
-- `create_content()` - Create content timeline item
-- `create_todo()` - Create todo timeline item
-- `get_message_opens()` - Retrieve email opens
+# Activate (macOS/Linux)
+source venv/bin/activate
 
-### Webhooks (3 endpoints)
-- `list()` - List webhook subscriptions
-- `subscribe()` - Subscribe to change events
-- `unsubscribe()` - Cancel a subscription
+# Install dependencies
+pip install -r requirements-dev.txt
+```
 
-## Authentication
+### Running Tests
 
-The SDK supports three authentication methods:
+```bash
+# Unit tests (100% coverage)
+make test
 
-1. **API Key** (simplest for development)
-   ```python
-   client = ClozeClient(api_key="your_api_key")
-   ```
+# Integration tests (requires CLOZE_API_KEY)
+make test-integration
 
-2. **OAuth 2.0** (required for public integrations)
-   ```python
-   client = ClozeClient(oauth_token="your_oauth_token")
-   ```
+# E2E tests (requires CLOZE_API_KEY)
+make test-e2e
 
-3. **Bearer Token** (alternative API key format)
-   ```python
-   client = ClozeClient(api_key="your_api_key")  # Uses bearer token format
-   ```
+# All tests
+make test-all
+```
+
+See [`TESTING.md`](TESTING.md) for detailed testing documentation.
+
+## API Reference
+
+All Cloze API endpoints are available through the client:
+
+- `client.analytics.*` - Analytics endpoints
+- `client.team.*` - Team management
+- `client.account.*` - Account operations
+- `client.projects.*` - Project CRUD
+- `client.people.*` - People CRUD
+- `client.companies.*` - Company CRUD
+- `client.timeline.*` - Timeline operations
+- `client.webhooks.*` - Webhook management
+
+See [`../docs/cloze-api-docs.md`](../docs/cloze-api-docs.md) for complete API documentation.
 
 ## Error Handling
 
-The SDK provides custom exceptions:
-
 ```python
-from cloze_sdk import ClozeAPIError, ClozeAuthenticationError, ClozeRateLimitError
+from cloze_sdk import (
+    ClozeAPIError,
+    ClozeAuthenticationError,
+    ClozeRateLimitError
+)
 
 try:
     result = client.account.get_profile()
@@ -173,21 +131,17 @@ except ClozeAPIError as e:
     print(f"API error: {e}")
 ```
 
-## Examples
-
-See the `examples/` directory for more detailed examples.
-
 ## Documentation
 
-Full API documentation is available at: https://developer.cloze.com/
+- **Full API Docs**: [`../docs/cloze-api-docs.md`](../docs/cloze-api-docs.md)
+- **Testing Guide**: [`TESTING.md`](TESTING.md)
+- **Developer Portal**: [https://developer.cloze.com/](https://developer.cloze.com/)
 
 ## License
 
-MIT License
+AGPLv3 - See [`../LICENSE-CODE`](../LICENSE-CODE) for details.
 
 ## Support
 
-For issues and questions:
-- GitHub Issues: https://github.com/cloze/cloze-sdk-python/issues
-- Email: support@cloze.com
-
+- **Issues**: [GitHub Issues](https://github.com/cloze/cloze-sdk/issues)
+- **Email**: support@cloze.com
