@@ -107,6 +107,6 @@ Contributions are welcome! Please see the individual SDK READMEs for contributio
 
 ## License
 
-- **Code**: AGPLv3 - See [LICENSE-CODE](LICENSE-CODE) for details
-- **Documentation**: CC-BY-SA 4.0 - See [LICENSE-DOCS](LICENSE-DOCS) for details
+- **Code**: AGPLv3 - See [`LICENSE-CODE`](LICENSE-CODE) for details
+- **Documentation**: CC-BY-SA 4.0 - See [`LICENSE-DOCS`](LICENSE-DOCS) for details
 
