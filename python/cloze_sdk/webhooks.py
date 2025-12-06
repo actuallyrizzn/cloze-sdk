@@ -61,7 +61,7 @@ class Webhooks:
         Returns:
             Subscription information with uniqueid
         """
-        subscription = {"event": event, "target_url": target_url}
+        subscription: Dict[str, Any] = {"event": event, "target_url": target_url}
 
         if scope:
             subscription["scope"] = scope

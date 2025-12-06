@@ -17,7 +17,7 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, Union
 
 
 class Timeline:
@@ -81,7 +81,7 @@ class Timeline:
         Returns:
             Message opens data
         """
-        params = {}
+        params: Dict[str, Union[int, str]] = {}
         if from_timestamp is not None:
             params["from"] = from_timestamp
         if user:

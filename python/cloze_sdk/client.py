@@ -140,7 +140,7 @@ class ClozeClient:
             request_kwargs["data"] = data
 
         try:
-            response = self.session.request(**request_kwargs)
+            response = self.session.request(**request_kwargs)  # type: ignore[arg-type]
             return self._handle_response(response)
         except requests.exceptions.RequestException as e:
             raise ClozeAPIError(f"Request failed: {str(e)}")
