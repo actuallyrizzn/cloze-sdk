@@ -19,8 +19,20 @@ abstract class TestCase extends BaseTestCase
      */
     protected function createMockClient(array $methods = []): MockObject
     {
-        $client = $this->createPartialMock(ClozeClient::class, $methods);
-        $client->method('makeRequest')->willReturn(['errorcode' => 0, 'data' => []]);
+        // Create a partial mock that mocks specified methods
+        // Always include makeRequest unless it's already in the methods array
+        $methodsToMock = in_array('makeRequest', $methods) ? $methods : array_merge(['makeRequest'], $methods);
+        $methodsToMock = array_unique($methodsToMock);
+        $client = $this->createPartialMock(ClozeClient::class, $methodsToMock);
+        
+        // Call the constructor with test API key to initialize endpoint modules
+        $client->__construct('test_api_key');
+        
+        // Set up default makeRequest return value
+        if (in_array('makeRequest', $methodsToMock)) {
+            $client->method('makeRequest')->willReturn(['errorcode' => 0, 'data' => []]);
+        }
+        
         return $client;
     }
 

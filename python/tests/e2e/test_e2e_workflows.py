@@ -160,7 +160,10 @@ class TestE2EWorkflows:
                     "measures": ["sentmails"]
                 }
             })
-            assert activity_result.get("errorcode") == 0
+            # API returns query results directly without errorcode wrapper
+            assert isinstance(activity_result, dict)
+            # Should have the query key with results
+            assert "test_query" in activity_result
             
         except ClozeAPIError as e:
             pytest.skip(f"E2E test skipped due to API error: {e}")

@@ -73,9 +73,13 @@ class ClozeClient
         $this->baseUrl = $baseUrl ?: self::BASE_URL;
         $this->timeout = $timeout;
 
+        // Check if SSL verification should be disabled (for testing)
+        $verify = getenv('CLOZE_SSL_VERIFY') !== 'false';
+        
         $this->client = new GuzzleClient([
             'base_uri' => $this->baseUrl,
             'timeout' => $this->timeout,
+            'verify' => $verify,
             'headers' => [
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
@@ -88,6 +92,7 @@ class ClozeClient
             $this->client = new GuzzleClient([
                 'base_uri' => $this->baseUrl,
                 'timeout' => $this->timeout,
+                'verify' => $verify,
                 'headers' => [
                     'Accept' => 'application/json',
                     'Content-Type' => 'application/json',
@@ -99,6 +104,7 @@ class ClozeClient
             $this->client = new GuzzleClient([
                 'base_uri' => $this->baseUrl,
                 'timeout' => $this->timeout,
+                'verify' => $verify,
                 'headers' => [
                     'Accept' => 'application/json',
                     'Content-Type' => 'application/json',

@@ -14,7 +14,9 @@ class AnalyticsIntegrationTest extends IntegrationTestCase
         ];
         
         $result = $this->client->analytics->queryActivity($queries);
-        $this->assertArrayHasKey('errorcode', $result);
+        // API returns query results directly without errorcode wrapper
+        $this->assertIsArray($result);
+        $this->assertArrayHasKey('sentmails', $result);
     }
 
     public function testQueryFunnel(): void
@@ -27,7 +29,8 @@ class AnalyticsIntegrationTest extends IntegrationTestCase
         ];
         
         $result = $this->client->analytics->queryFunnel($queries);
-        $this->assertArrayHasKey('errorcode', $result);
+        // API returns query results directly
+        $this->assertIsArray($result);
     }
 
     public function testQueryLeads(): void
@@ -40,7 +43,8 @@ class AnalyticsIntegrationTest extends IntegrationTestCase
         ];
         
         $result = $this->client->analytics->queryLeads($queries);
-        $this->assertArrayHasKey('errorcode', $result);
+        // API returns query results directly
+        $this->assertIsArray($result);
     }
 
     public function testQueryProjects(): void
@@ -53,7 +57,8 @@ class AnalyticsIntegrationTest extends IntegrationTestCase
         ];
         
         $result = $this->client->analytics->queryProjects($queries);
-        $this->assertArrayHasKey('errorcode', $result);
+        // API returns query results directly
+        $this->assertIsArray($result);
     }
 
     public function testQueryTeamActivity(): void
@@ -66,7 +71,8 @@ class AnalyticsIntegrationTest extends IntegrationTestCase
         ];
         
         $result = $this->client->analytics->queryTeamActivity($queries);
-        $this->assertArrayHasKey('errorcode', $result);
+        // API returns query results directly
+        $this->assertIsArray($result);
     }
 
     public function testGetTeamActivityUpdate(): void

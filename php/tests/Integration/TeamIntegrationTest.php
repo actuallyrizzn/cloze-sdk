@@ -2,6 +2,8 @@
 
 namespace Cloze\SDK\Tests\Integration;
 
+use Cloze\SDK\Exceptions\ClozeAPIError;
+
 class TeamIntegrationTest extends IntegrationTestCase
 {
     public function testListMembers(): void
@@ -12,14 +14,30 @@ class TeamIntegrationTest extends IntegrationTestCase
 
     public function testGetNodes(): void
     {
-        $result = $this->client->team->getNodes();
-        $this->assertArrayHasKey('errorcode', $result);
+        try {
+            $result = $this->client->team->getNodes();
+            $this->assertArrayHasKey('errorcode', $result);
+        } catch (ClozeAPIError $e) {
+            // Account may not be a team member
+            if (strpos($e->getMessage(), 'not a member of a team') !== false) {
+                $this->markTestSkipped('Account is not a team member');
+            }
+            throw $e;
+        }
     }
 
     public function testGetRoles(): void
     {
-        $result = $this->client->team->getRoles();
-        $this->assertArrayHasKey('errorcode', $result);
+        try {
+            $result = $this->client->team->getRoles();
+            $this->assertArrayHasKey('errorcode', $result);
+        } catch (ClozeAPIError $e) {
+            // Account may not be a team member
+            if (strpos($e->getMessage(), 'not a member of a team') !== false) {
+                $this->markTestSkipped('Account is not a team member');
+            }
+            throw $e;
+        }
     }
 }
 

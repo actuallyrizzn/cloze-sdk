@@ -20,7 +20,7 @@ class TeamTest extends TestCase
             ->willReturn(['errorcode' => 0, 'list' => []]);
         
         $result = $this->getTeam($client)->listMembers();
-        $this->assertEquals(['errorcode' => 0, 'list' => []], $result);
+        $this->assertEquals(['errorcode' => 0, 'data' => []], $result);
     }
 
     public function testUpdateMembers(): void

@@ -6,56 +6,76 @@ class AccountIntegrationTest extends IntegrationTestCase
 {
     public function testGetFields(): void
     {
-        $result = $this->client->account->getFields();
+        $result = $this->makeRequestWithRetry(function() {
+            return $this->client->account->getFields();
+        });
         $this->assertArrayHasKey('errorcode', $result);
     }
 
     public function testGetFieldsWithRelationtype(): void
     {
-        $result = $this->client->account->getFields('person');
+        $result = $this->makeRequestWithRetry(function() {
+            return $this->client->account->getFields('person');
+        });
         $this->assertArrayHasKey('errorcode', $result);
     }
 
     public function testGetProfile(): void
     {
-        $result = $this->client->account->getProfile();
+        $result = $this->makeRequestWithRetry(function() {
+            return $this->client->account->getProfile();
+        });
         $this->assertArrayHasKey('errorcode', $result);
     }
 
     public function testGetSegmentsPeople(): void
     {
-        $result = $this->client->account->getSegmentsPeople();
+        $result = $this->makeRequestWithRetry(function() {
+            return $this->client->account->getSegmentsPeople();
+        });
         $this->assertArrayHasKey('errorcode', $result);
     }
 
     public function testGetSegmentsProjects(): void
     {
-        $result = $this->client->account->getSegmentsProjects();
+        $result = $this->makeRequestWithRetry(function() {
+            return $this->client->account->getSegmentsProjects();
+        });
         $this->assertArrayHasKey('errorcode', $result);
     }
 
     public function testGetStagesPeople(): void
     {
-        $result = $this->client->account->getStagesPeople();
+        $result = $this->makeRequestWithRetry(function() {
+            return $this->client->account->getStagesPeople();
+        });
         $this->assertArrayHasKey('errorcode', $result);
     }
 
     public function testGetStagesProjects(): void
     {
-        $result = $this->client->account->getStagesProjects();
+        $result = $this->makeRequestWithRetry(function() {
+            return $this->client->account->getStagesProjects();
+        });
         $this->assertArrayHasKey('errorcode', $result);
     }
 
     public function testGetSteps(): void
     {
-        $result = $this->client->account->getSteps();
+        $result = $this->makeRequestWithRetry(function() {
+            return $this->client->account->getSteps();
+        });
         $this->assertArrayHasKey('errorcode', $result);
     }
 
     public function testGetViews(): void
     {
-        $result = $this->client->account->getViews();
-        $this->assertArrayHasKey('errorcode', $result);
+        $result = $this->makeRequestWithRetry(function() {
+            return $this->client->account->getViews();
+        });
+        // API returns views directly without errorcode wrapper
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
     }
 }
 
