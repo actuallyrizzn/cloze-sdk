@@ -20,6 +20,7 @@
  */
 
 namespace Cloze\SDK\Exceptions;
+
 class ClozeAPIError extends \Exception
 {
     protected $errorcode;
@@ -37,7 +38,10 @@ class ClozeAPIError extends \Exception
         return $this->errorcode;
     }
 
-    public function getResponse()
+    /**
+     * @return \Psr\Http\Message\ResponseInterface|null
+     */
+    public function getResponse(): ?\Psr\Http\Message\ResponseInterface
     {
         return $this->response;
     }

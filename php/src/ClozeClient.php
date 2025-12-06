@@ -75,44 +75,28 @@ class ClozeClient
 
         // Check if SSL verification should be disabled (for testing)
         $verify = getenv('CLOZE_SSL_VERIFY') !== 'false';
-        
+
+        // Prepare base headers
+        $headers = [
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+            'User-Agent' => 'cloze-sdk-php/1.0.0',
+        ];
+
+        // Add authentication header
+        if ($this->oauthToken) {
+            $headers['Authorization'] = 'Bearer ' . $this->oauthToken;
+        } elseif ($this->apiKey) {
+            $headers['Authorization'] = 'Bearer ' . $this->apiKey;
+        }
+
+        // Create Guzzle client with common configuration
         $this->client = new GuzzleClient([
             'base_uri' => $this->baseUrl,
             'timeout' => $this->timeout,
             'verify' => $verify,
-            'headers' => [
-                'Accept' => 'application/json',
-                'Content-Type' => 'application/json',
-                'User-Agent' => 'cloze-sdk-php/1.0.0',
-            ],
+            'headers' => $headers,
         ]);
-
-        // Set authentication
-        if ($this->oauthToken) {
-            $this->client = new GuzzleClient([
-                'base_uri' => $this->baseUrl,
-                'timeout' => $this->timeout,
-                'verify' => $verify,
-                'headers' => [
-                    'Accept' => 'application/json',
-                    'Content-Type' => 'application/json',
-                    'User-Agent' => 'cloze-sdk-php/1.0.0',
-                    'Authorization' => 'Bearer ' . $this->oauthToken,
-                ],
-            ]);
-        } elseif ($this->apiKey) {
-            $this->client = new GuzzleClient([
-                'base_uri' => $this->baseUrl,
-                'timeout' => $this->timeout,
-                'verify' => $verify,
-                'headers' => [
-                    'Accept' => 'application/json',
-                    'Content-Type' => 'application/json',
-                    'User-Agent' => 'cloze-sdk-php/1.0.0',
-                    'Authorization' => 'Bearer ' . $this->apiKey,
-                ],
-            ]);
-        }
 
         // Initialize endpoint modules
         $this->analytics = new Analytics($this);

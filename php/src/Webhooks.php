@@ -81,7 +81,7 @@ class Webhooks
             $subscription['client_reference'] = $clientReference;
         }
         if ($ttl) {
-            $subscription['ttl'] = (string) $ttl;
+            $subscription['ttl'] = $ttl;
         }
 
         return $this->client->makeRequest('POST', '/v1/webhooks/subscribe', null, $subscription);
