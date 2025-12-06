@@ -35,6 +35,9 @@ class Account
      *
      * @param string|null $relationtype Optional filter - 'person', 'project', or 'company' (or null for all)
      * @return array List of custom fields
+     * @throws \Cloze\SDK\Exceptions\ClozeAPIError
+     * @throws \Cloze\SDK\Exceptions\ClozeAuthenticationError
+     * @throws \Cloze\SDK\Exceptions\ClozeRateLimitError
      */
     public function getFields(?string $relationtype = null): array
     {
@@ -50,6 +53,9 @@ class Account
      * Get user profile.
      *
      * @return array User profile information
+     * @throws \Cloze\SDK\Exceptions\ClozeAPIError
+     * @throws \Cloze\SDK\Exceptions\ClozeAuthenticationError
+     * @throws \Cloze\SDK\Exceptions\ClozeRateLimitError
      */
     public function getProfile(): array
     {
@@ -60,6 +66,9 @@ class Account
      * Get people contact segments.
      *
      * @return array List of people segments
+     * @throws \Cloze\SDK\Exceptions\ClozeAPIError
+     * @throws \Cloze\SDK\Exceptions\ClozeAuthenticationError
+     * @throws \Cloze\SDK\Exceptions\ClozeRateLimitError
      */
     public function getSegmentsPeople(): array
     {
@@ -70,6 +79,9 @@ class Account
      * Get project segments.
      *
      * @return array List of project segments
+     * @throws \Cloze\SDK\Exceptions\ClozeAPIError
+     * @throws \Cloze\SDK\Exceptions\ClozeAuthenticationError
+     * @throws \Cloze\SDK\Exceptions\ClozeRateLimitError
      */
     public function getSegmentsProjects(): array
     {
@@ -80,6 +92,9 @@ class Account
      * Get people contact stages.
      *
      * @return array List of people stages
+     * @throws \Cloze\SDK\Exceptions\ClozeAPIError
+     * @throws \Cloze\SDK\Exceptions\ClozeAuthenticationError
+     * @throws \Cloze\SDK\Exceptions\ClozeRateLimitError
      */
     public function getStagesPeople(): array
     {
@@ -90,6 +105,9 @@ class Account
      * Get project stages.
      *
      * @return array List of project stages
+     * @throws \Cloze\SDK\Exceptions\ClozeAPIError
+     * @throws \Cloze\SDK\Exceptions\ClozeAuthenticationError
+     * @throws \Cloze\SDK\Exceptions\ClozeRateLimitError
      */
     public function getStagesProjects(): array
     {
@@ -100,6 +118,9 @@ class Account
      * Get steps.
      *
      * @return array List of steps
+     * @throws \Cloze\SDK\Exceptions\ClozeAPIError
+     * @throws \Cloze\SDK\Exceptions\ClozeAuthenticationError
+     * @throws \Cloze\SDK\Exceptions\ClozeRateLimitError
      */
     public function getSteps(): array
     {
@@ -110,6 +131,9 @@ class Account
      * Get views and audiences.
      *
      * @return array List of views and audiences
+     * @throws \Cloze\SDK\Exceptions\ClozeAPIError
+     * @throws \Cloze\SDK\Exceptions\ClozeAuthenticationError
+     * @throws \Cloze\SDK\Exceptions\ClozeRateLimitError
      */
     public function getViews(): array
     {
