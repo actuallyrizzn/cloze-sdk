@@ -39,9 +39,9 @@ class ClozeAPIError extends \Exception
     }
 
     /**
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return mixed
      */
-    public function getResponse(): ?\Psr\Http\Message\ResponseInterface
+    public function getResponse()
     {
         return $this->response;
     }
